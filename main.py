@@ -1,6 +1,6 @@
 def main():
     #Variables
-    path = "/home/drea/Bookbot/books/frankenstein.txt"
+    path = "/home/REDACTED/Bookbot/books/frankenstein.txt"
     text = getBookText(path)
     wordsCount = getWordCount(text)
     charCount = getCharCount(text)
