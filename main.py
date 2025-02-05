@@ -1,19 +1,18 @@
-
 def main():
     #Variables
     path = "/home/drea/Bookbot/books/frankenstein.txt"
     text = getBookText(path)
     wordsCount = getWordCount(text)
     charCount = getCharCount(text)
-    sorted_chars = sortChars(charCount)
+    sortedChars = sortChars(charCount)
     
     #Report print begging
     print("--- Begin report of books/frankenstein.txt ---")
     print(f"{wordsCount} words found in the document\n")
     
     # forloop with f-string for list report print
-    for char_dict in sorted_chars:
-        print(f"The '{char_dict['char']}' character was found {char_dict['count']} times")
+    for charDict in sortedChars:
+        print(f"The '{charDict['char']}' character was found {charDict['count']} times")
     
     #End of the report
     print("--- End report ---")
@@ -43,16 +42,16 @@ def getCharCount(text):
     return characters 
 
 #sorting function for sort_chars(char_count): function
-def sort_on(dict):
+def sortOn(dict):
     return dict["count"]
 
 #sorting function for individual characters
 def sortChars(char_count):
-    chars_list = [] #makes free list
+    charsList = [] #makes free list
     for char, count in char_count.items(): #forloop for char. and counts. (key and value)
         if char.isalpha():  # only include letters
-            chars_list.append({"char": char, "count": count}) #adding chars. and counts to empty list 
-    chars_list.sort(reverse=True, key=sort_on) #sorting action
-    return chars_list #return sorted character list
+            charsList.append({"char": char, "count": count}) #adding chars. and counts to empty list 
+    charsList.sort(reverse=True, key=sortOn) #sorting action
+    return charsList #return sorted character list
 
 main()
