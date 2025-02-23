@@ -1,57 +1,41 @@
+import sys
+from stats import getBookText, getWordCount, getCharCount, sortChars 
+
 def main():
-    #Variables
-    path = "/home/REDACTED/Bookbot/books/frankenstein.txt"
-    text = getBookText(path)
-    wordsCount = getWordCount(text)
-    charCount = getCharCount(text)
-    sortedChars = sortChars(charCount)
+    # Check whether the correct number of arguments is passed
+    # If not, provide usage instructions and exit the program with an error status
+    if len(sys.argv) != 2:
+        print("Usage: python3 main.py <path_to_book>")
+        sys.exit(1)
+
+    # Store the book's file path provided through the command line argument
+    book_path = sys.argv[1]
     
-    #Report print begging
-    print("--- Begin report of books/frankenstein.txt ---")
-    print(f"{wordsCount} words found in the document\n")
+    # Read the entire text of the book from the given file path
+    text = getBookText(book_path)
     
-    # forloop with f-string for list report print
-    for charDict in sortedChars:
-        print(f"The '{charDict['char']}' character was found {charDict['count']} times")
+    # Calculate the total word count in the book's text
+    word_count = getWordCount(text)
     
-    #End of the report
-    print("--- End report ---")
+    # Get the count of each character appearing in the text
+    char_count = getCharCount(text)
 
-#This function sets path to book from books and reads it
-def getBookText(path):
-    with open(path) as f:
-        return f.read()
-
-#This function counts how many words are in the book
-def getWordCount(text):
-    words = text.split()
-    return len(words)
-
-#This function counts characters in the book
-def getCharCount(text):
-    characters = {} #make a free dict(ionary)
-    for character in text: #for loop in text
-        lowered = character.lower() #lower the all the characters!
-        if lowered in characters: 
-            #if we found new lowered in characters then we add it to dict. plus one
-            characters[lowered] = characters[lowered] + 1  
-            #else (we already found it) so we just add plus one to count in dictionary       
-        else:
-            characters[lowered] = 1
-    #return dict(ionary)    
-    return characters 
-
-#sorting function for sort_chars(char_count): function
-def sortOn(dict):
-    return dict["count"]
-
-#sorting function for individual characters
-def sortChars(char_count):
-    charsList = [] #makes free list
-    for char, count in char_count.items(): #forloop for char. and counts. (key and value)
-        if char.isalpha():  # only include letters
-            charsList.append({"char": char, "count": count}) #adding chars. and counts to empty list 
-    charsList.sort(reverse=True, key=sortOn) #sorting action
-    return charsList #return sorted character list
+    # Sort the character counts for cleaner output (likely by frequency or alphabetically)
+    sorted_chars = sortChars(char_count)
+    
+    # Print a formatted report to the console
+    print("============ BOOKBOT ============")
+    print(f"Analyzing book found at {book_path}...")
+    print("----------- Word Count ----------")
+    print(f"Found {word_count} total words")
+    print("--------- Character Count -------")
+    
+    # Iterate through the sorted character counts and print them to the console
+    for char_dict in sorted_chars:
+        print(f"{char_dict['char']}: {char_dict['count']}")
+    
+    # Conclude the report
+    print("============= END ===============")
 
 main()
+
